@@ -199,10 +199,10 @@ function drawGraph() {
             .style('fill', 'lightblue')
             .style('stroke', 'white')
             .attr('cy', function (d) {
-                return y(d[yVariable])
+                return y(parseFloat(d[yVariable]))
             })
             .attr('cx', function (d) {
-                return x(d[xVariable])
+                return x(parseFloat(d[xVariable]))
             })
             .attr('r', 10)
 
@@ -210,14 +210,26 @@ function drawGraph() {
             .classed('circleText', true)
             .attr('dy', '0.35em')
             .attr('y', function (d) {
-                return y(d[yVariable])
+                return y(parseFloat(d[yVariable]))
             })
             .attr('x', function (d) {
-                return x(d[xVariable])
+                return x(parseFloat(d[xVariable]))
             })
             .attr("text-anchor", "middle")
             .text(d => d.abbr)
+
+        // add invisble square to better fit tooltip
+        circles.append('circle')
+            .attr('cy', function (d) {
+                return y(parseFloat(d[yVariable]))
+            })
+            .attr('cx', function (d) {
+                return x(parseFloat(d[xVariable]))
+            })
+            .attr('r', 10)
+            .style('fill-opacity', 0)
             .on('mouseover', function(d) {
+                d3.select(this).style('stroke', 'black')
                 div.transition()
                     .duration(100)
                     .style('opacity', .9);
@@ -227,10 +239,9 @@ function drawGraph() {
                 )
                     .style('left', d3.event.pageX + 'px')
                     .style('top', d3.event.pageY + 'px')
-                // .style('color', 'white')
-                // .style('background', 'black');
             })
             .on('mouseout', function(d) {
+                d3.select(this).style('stroke', 'white')
                 div.transition()
                     .duration(100)
                     .style('opacity', 0);
