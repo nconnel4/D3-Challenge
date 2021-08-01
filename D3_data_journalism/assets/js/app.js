@@ -45,12 +45,6 @@ function drawAxes(xLowerLimit, xUpperLimit, yLowerLimit, yUpperLimit) {
         .text("In Poverty (%)")
         .on('click', function() {
             setXVariable('poverty')
-        })
-        .on('mouseover', function () {
-            povertyLabel.style('fill', 'black');
-        })
-        .on('mouseout', function () {
-            changeXAxisLabel();
         });
 
     ageLabel = svg.append('text')
@@ -59,12 +53,6 @@ function drawAxes(xLowerLimit, xUpperLimit, yLowerLimit, yUpperLimit) {
         .text("Age (Median)")
         .on('click', function() {
             setXVariable('age')
-        })
-        .on('mouseover', function () {
-            ageLabel.style('fill', 'black');
-        })
-        .on('mouseout', function () {
-            changeXAxisLabel();
         });
 
     incomeLabel = svg.append('text')
@@ -73,12 +61,6 @@ function drawAxes(xLowerLimit, xUpperLimit, yLowerLimit, yUpperLimit) {
         .text("Household Income (Median)")
         .on('click', function() {
             setXVariable('income')
-        })
-        .on('mouseover', function () {
-            incomeLabel.style('fill', 'black');
-            })
-        .on('mouseout', function () {
-            changeXAxisLabel();
         });
 
     // draw Y Axis
@@ -94,12 +76,6 @@ function drawAxes(xLowerLimit, xUpperLimit, yLowerLimit, yUpperLimit) {
         .text('Smokes (%)')
         .on('click', function() {
             setYVariable('smokes')
-        })
-        .on('mouseover', function () {
-            smokeLabel.style('fill', 'black');
-        })
-        .on('mouseout', function () {
-            changeYAxisLabel();
         });
 
     obeseLabel = svg.append('text')
@@ -110,12 +86,6 @@ function drawAxes(xLowerLimit, xUpperLimit, yLowerLimit, yUpperLimit) {
         .text('Obese (%)')
         .on('click', function() {
             setYVariable('obesity')
-        })
-        .on('mouseover', function () {
-            obeseLabel.style('fill', 'black');
-        })
-        .on('mouseout', function () {
-            changeYAxisLabel();
         });
 
     healthcareLabel = svg.append('text')
@@ -126,48 +96,30 @@ function drawAxes(xLowerLimit, xUpperLimit, yLowerLimit, yUpperLimit) {
         .text('Lacks Healthcare(%)')
         .on('click', function() {
             setYVariable('healthcare')
-        })
-        .on('mouseover', function () {
-            healthcareLabel.style('fill', 'black');
-        })
-        .on('mouseout', function () {
-            changeYAxisLabel();
         });
 }
 
 function changeYAxisLabel() {
     switch (yVariable) {
         case 'smokes':
-            smokeLabel.style('font-weight', 'bold')
-                .style('fill', 'black');
-            obeseLabel.style('font-weight', 'normal')
-                .style('fill', 'lightgrey');
-            healthcareLabel.style('font-weight', 'normal')
-                .style('fill', 'lightgrey');
+            smokeLabel.classed('activeLabel',true);
+            obeseLabel.classed('axisLabel', true);
+            healthcareLabel.classed('axisLabel', true);
             break;
         case 'obesity':
-            smokeLabel.style('font-weight', 'normal')
-                .style('fill', 'lightgrey');
-            obeseLabel.style('font-weight', 'bold')
-                .style('fill', 'black');
-            healthcareLabel.style('font-weight', 'normal')
-                .style('fill', 'lightgrey');
+            smokeLabel.classed('axisLabel',true);
+            obeseLabel.classed('activeLabel', true);
+            healthcareLabel.classed('axisLabel', true);
             break;
         case 'healthcare':
-            smokeLabel.style('font-weight', 'normal')
-                .style('fill', 'lightgrey');
-            obeseLabel.style('font-weight', 'normal')
-                .style('fill', 'lightgrey')
-            healthcareLabel.style('font-weight', 'bold')
-                .style('fill', 'black');
+            smokeLabel.classed('axisLabel',true);
+            obeseLabel.classed('axisLabel', true);
+            healthcareLabel.classed('activeLabel', true);
             break;
         default:
-            smokeLabel.style('font-weight', 'normal')
-                .style('fill', 'lightgrey')
-            obeseLabel.style('font-weight', 'normal')
-                .style('fill', 'lightgrey')
-            healthcareLabel.style('font-weight', 'normal')
-                .style('fill', 'lightgrey')
+            smokeLabel.classed('axisLabel',true);
+            obeseLabel.classed('axisLabel', true);
+            healthcareLabel.classed('axisLabel', true);
             break;
     }
 
@@ -177,36 +129,24 @@ function changeXAxisLabel() {
 
     switch (xVariable) {
         case 'poverty':
-            povertyLabel.style('font-weight', 'bold')
-                .style('fill', 'black');
-            ageLabel.style('font-weight', 'normal')
-                .style('fill', 'lightgrey');
-            incomeLabel.style('font-weight', 'normal')
-                .style('fill', 'lightgrey');
+            povertyLabel.classed('activeLabel',true);
+            ageLabel.classed('axisLabel', true);
+            incomeLabel.classed('axisLabel', true);
             break;
         case 'age':
-            povertyLabel.style('font-weight', 'normal')
-                .style('fill', 'lightgrey');
-            ageLabel.style('font-weight', 'bold')
-                .style('fill', 'black');
-            incomeLabel.style('font-weight', 'normal')
-                .style('fill', 'lightgrey');
+            povertyLabel.classed('axisLabel',true);
+            ageLabel.classed('activeLabel', true);
+            incomeLabel.classed('axisLabel', true);
             break;
         case 'income':
-            povertyLabel.style('font-weight', 'normal')
-                .style('fill', 'lightgrey');
-            ageLabel.style('font-weight', 'normal')
-                .style('fill', 'lightgrey');
-            incomeLabel.style('font-weight', 'bold')
-                .style('fill', 'black');
+            povertyLabel.classed('axisLabel',true);
+            ageLabel.classed('axisLabel', true);
+            incomeLabel.classed('activeLabel', true);
             break;
         default:
-            povertyLabel.style('font-weight', 'normal')
-                .style('fill', 'lightgrey');
-            ageLabel.style('font-weight', 'normal')
-                .style('fill', 'lightgrey');
-            incomeLabel.style('font-weight', 'normal')
-                .style('fill', 'lightgrey');
+            povertyLabel.classed('axisLabel',true);
+            ageLabel.classed('axisLabel', true);
+            incomeLabel.classed('axisLabel', true);
             break;
     }
 }
