@@ -29,3 +29,22 @@ body {
   margin: 0;
   font-size: 16px;
 }
+
+svg .circleText {
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 9px;
+  fill: white;
+  stroke-width: 0;
+}
+
+.axisLabel:hover {
+  fill: black;
+}
+
+svg .axisLabel {
+  fill: lightgray;
+}
+
+svg .activeLabel {
+  font-weight: bold;
+}
