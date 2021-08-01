@@ -23,63 +23,14 @@ const svg = d3.select('#scatter').append('svg')
     .append('g')
     .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
-let smokeLabel = svg.append("text"),
-    obeseLabel = svg.append("text"),
-    healthcareLabel = svg.append("text"),
-    povertyLabel = svg.append("text"),
-    ageLabel = svg.append("text"),
-    incomeLabel = svg.append("text");
+// create labels
+let smokeLabel,
+    obeseLabel,
+    healthcareLabel,
+    povertyLabel,
+    ageLabel,
+    incomeLabel;
 
-
-
-// svg setup
-
-// let x = d3.scaleLinear().domain([0, 100]).range([0, width]);
-// svg.append('g')
-//     .attr('transform', 'translate(0,' + height + ')')
-//     .call(d3.axisBottom(x));
-
-// let povertyLabel = svg.append("text")
-//     .attr('transform','translate(' + width / 2 + ' ,' + (height + margin.top + 30) + ')')
-//     .style('text-anchor', 'middle')
-//     .style('font-weight', 'bold')
-//     .text("In Poverty (%)");
-// let ageLabel = svg.append('text')
-//     .attr('transform','translate(' + width / 2 + ' ,' + (height + margin.top + 55) + ')')
-//     .style('text-anchor', 'middle')
-//     .style('fill', 'lightgrey')
-//     .text("Age (Median)");
-// let IncomeLabel = svg.append('text')
-//     .attr('transform','translate(' + width / 2 + ' ,' + (height + margin.top + 80) + ')')
-//     .style('text-anchor', 'middle')
-//     .style('fill', 'lightgrey')
-//     .text("Household Income (Median)");
-
-
-// let y = d3.scaleLinear().domain([0, 100]).range([height, 0]);
-// svg.append('g')
-//     .call(d3.axisLeft(y));
-// let smokeLabel = svg.append('text')
-//     .attr('transform', 'rotate(-90)')
-//     .attr('y', -40)
-//     .attr('x', 0 - height / 2)
-//     .style('text-anchor', 'middle')
-//     .style('font-weight', 'bold')
-//     .text('Smokes (%)')
-// let obeseLabel = svg.append('text')
-//     .attr('transform', 'rotate(-90)')
-//     .attr('y', -60)
-//     .attr('x', 0 - height / 2)
-//     .style('text-anchor', 'middle')
-//     .style('fill', 'lightgrey')
-//     .text('Obese (%)')
-// let healthcareLabel = svg.append('text')
-//     .attr('transform', 'rotate(-90)')
-//     .attr('y', -80)
-//     .attr('x', 0 - height / 2)
-//     .style('text-anchor', 'middle')
-//     .style('fill', 'lightgrey')
-//     .text('Lacks Healthcare(%)')
 
 function drawAxes(xLowerLimit, xUpperLimit, yLowerLimit, yUpperLimit) {
     //draw X Axis
@@ -279,7 +230,8 @@ function drawGraph() {
         let circles = svg.selectAll("circles")
             .data(data)
             .enter()
-            .append('circle')
+
+        circles.append('circle')
             .style('fill', 'lightblue')
             .style('stroke', 'white')
             .attr('cy', function (d) {
@@ -288,7 +240,20 @@ function drawGraph() {
             .attr('cx', function (d) {
                 return x(d[xVariable])
             })
-            .attr('r', 10);
+            .attr('r', 10)
+
+
+        circles.append('text')
+            .classed('circleText', true)
+            .attr('dy', '0.35em')
+            .attr('y', function (d) {
+                return y(d[yVariable])
+            })
+            .attr('x', function (d) {
+                return x(d[xVariable])
+            })
+            .attr("text-anchor", "middle")
+            .text(d => d.abbr)
 
     })
 }
@@ -309,8 +274,6 @@ function init() {
     yVariable = 'smokes';
 
     drawGraph();
-    changeYAxisLabel();
-    // addXAxisLabel();
 }
 
 init()
