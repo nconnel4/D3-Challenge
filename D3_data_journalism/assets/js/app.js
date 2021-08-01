@@ -110,7 +110,7 @@ function addYAxisLabel() {
                 .style('fill', 'black');
             obeseLabel.style('font-weight', 'normal')
                 .style('fill', 'lightgrey');
-            healthcareLabel('font-weight', 'normal')
+            healthcareLabel.style('font-weight', 'normal')
                 .style('fill', 'lightgrey');
             break;
         case 'obesity':
@@ -118,7 +118,7 @@ function addYAxisLabel() {
                 .style('fill', 'lightgrey');
             obeseLabel.style('font-weight', 'bold')
                 .style('fill', 'black');
-            healthcareLabel('font-weight', 'normal')
+            healthcareLabel.style('font-weight', 'normal')
                 .style('fill', 'lightgrey');
             break;
         case 'healthcare':
@@ -126,7 +126,7 @@ function addYAxisLabel() {
                 .style('fill', 'lightgrey');
             obeseLabel.style('font-weight', 'normal')
                 .style('fill', 'lightgrey');
-            healthcareLabel('font-weight', 'normal')
+            healthcareLabel.style('font-weight', 'normal')
                 .style('fill', 'lightgrey');
             break;
         default:
@@ -134,8 +134,9 @@ function addYAxisLabel() {
                 .style('fill', 'lightgrey')
             obeseLabel.style('font-weight', 'normal')
                 .style('fill', 'lightgrey')
-            healthcareLabel('font-weight', 'normal')
+            healthcareLabel.style('font-weight', 'normal')
                 .style('fill', 'lightgrey')
+            break;
     }
 
 }
@@ -184,13 +185,19 @@ function setYVariable(value) {
 
 function setXVariable(value) {
     xVariable = value
-    drawGraph(xVariable, yVariable)
-    addYAxisLabel(xVariable)
+    drawGraph()
+    addYAxisLabel()
 }
 
 function init() {
+    xVariable = 'poverty'
+    yVariable = 'smokes'
 
+    drawGraph()
+    addYAxisLabel()
 }
+
+init()
 
 
 // d3.csv('assets/data/data.csv').then(function (data) {
