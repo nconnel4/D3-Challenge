@@ -4,7 +4,6 @@ let yVariable;
 let x;
 let y;
 
-
 // set margin
 const margin = {
     top: 20,
@@ -22,6 +21,11 @@ const svg = d3.select('#scatter').append('svg')
     .attr('height', height + margin.top + margin.bottom)
     .append('g')
     .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+
+var div = d3.select("body").append("div")
+    .attr("class", "tooltip")
+    .style("opacity", 0);
+
 
 // create labels
 let smokeLabel,
@@ -152,6 +156,25 @@ function changeXAxisLabel() {
 }
 
 function drawGraph() {
+    const labelDict = {
+        'poverty': 'Poverty: ',
+        'age': 'Median Age (Years): ',
+        'income': 'Median Household Income: $',
+        'obesity': 'Obesity: ',
+        'smokes': 'Smokes: ',
+        'healthcare': 'Lacks Healthcare: '
+    }
+
+    const suffixDict = {
+        'poverty': '%',
+        'obesity': '%',
+        'smokes': '%',
+        'healthcare': '%',
+        'age': '',
+        'income': ''
+    }
+
+
     // clear graph before drowing
     svg.selectAll('*').remove()
 
@@ -171,6 +194,7 @@ function drawGraph() {
             .data(data)
             .enter()
 
+
         circles.append('circle')
             .style('fill', 'lightblue')
             .style('stroke', 'white')
@@ -181,7 +205,6 @@ function drawGraph() {
                 return x(d[xVariable])
             })
             .attr('r', 10)
-
 
         circles.append('text')
             .classed('circleText', true)
@@ -194,6 +217,26 @@ function drawGraph() {
             })
             .attr("text-anchor", "middle")
             .text(d => d.abbr)
+            .on('mouseover', function(d) {
+                div.transition()
+                    .duration(100)
+                    .style('opacity', .9);
+                div.html('<center><strong>' + d.state + '</strong><br>' +
+                    '<strong>' + labelDict[xVariable] + '</strong>' + d[xVariable] + suffixDict[xVariable] + '<br>' +
+                    '<strong>' + labelDict[yVariable] + '</strong>' + d[yVariable] + suffixDict[yVariable] + '</center>'
+                )
+                    .style('left', d3.event.pageX + 'px')
+                    .style('top', d3.event.pageY + 'px')
+                // .style('color', 'white')
+                // .style('background', 'black');
+            })
+            .on('mouseout', function(d) {
+                div.transition()
+                    .duration(100)
+                    .style('opacity', 0);
+            })
+
+
 
     })
 }
