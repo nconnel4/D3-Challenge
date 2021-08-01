@@ -141,6 +141,56 @@ function addYAxisLabel() {
 
 }
 
+function addXAxisLabel() {
+    let povertyLabel = svg.append("text")
+        .attr('transform','translate(' + width / 2 + ' ,' + (height + margin.top + 30) + ')')
+        .style('text-anchor', 'middle')
+        .text("In Poverty (%)");
+    let ageLabel = svg.append('text')
+        .attr('transform','translate(' + width / 2 + ' ,' + (height + margin.top + 55) + ')')
+        .style('text-anchor', 'middle')
+        .text("Age (Median)");
+    let incomeLabel = svg.append('text')
+        .attr('transform','translate(' + width / 2 + ' ,' + (height + margin.top + 80) + ')')
+        .style('text-anchor', 'middle')
+        .text("Household Income (Median)");
+
+    switch (xVariable) {
+        case 'poverty':
+            povertyLabel.style('font-weight', 'bold')
+                .style('fill', 'black');
+            ageLabel.style('font-weight', 'normal')
+                .style('fill', 'lightgrey');
+            incomeLabel.style('font-weight', 'normal')
+                .style('fill', 'lightgrey');
+            break;
+        case 'age':
+            povertyLabel.style('font-weight', 'normal')
+                .style('fill', 'lightgrey');
+            ageLabel.style('font-weight', 'bold')
+                .style('fill', 'black');
+            incomeLabel.style('font-weight', 'normal')
+                .style('fill', 'lightgrey');
+            break;
+        case 'income':
+            povertyLabel.style('font-weight', 'normal')
+                .style('fill', 'lightgrey');
+            ageLabel.style('font-weight', 'normal')
+                .style('fill', 'lightgrey');
+            incomeLabel.style('font-weight', 'bold')
+                .style('fill', 'black');
+            break;
+        default:
+            povertyLabel.style('font-weight', 'normal')
+                .style('fill', 'lightgrey');
+            ageLabel.style('font-weight', 'normal')
+                .style('fill', 'lightgrey');
+            incomeLabel.style('font-weight', 'normal')
+                .style('fill', 'lightgrey');
+            break;
+    }
+}
+
 function drawGraph() {
     // clear graph before drowing
     svg.selectAll('*').remove()
@@ -155,8 +205,6 @@ function drawGraph() {
         yLowerLimit = d3.min(data, d => parseFloat(d[yVariable])) * .9
         yUpperLimit = d3.max(data, d => parseFloat(d[yVariable])) + 1.10
 
-        // console.log(xLimit)
-        // console.log(yLimit)
 
         drawAxes(xLowerLimit, xUpperLimit, yLowerLimit, yUpperLimit)
 
@@ -178,91 +226,26 @@ function drawGraph() {
 }
 
 function setYVariable(value) {
-    yVariable = value
-    drawGraph(xVariable, yVariable)
-    addYAxisLabel(yVariable)
+    yVariable = value;
+    drawGraph();
+    addYAxisLabel();
+    addXAxisLabel();
 }
 
 function setXVariable(value) {
-    xVariable = value
-    drawGraph()
-    addYAxisLabel()
+    xVariable = value;
+    drawGraph();
+    addXAxisLabel();
+    addYAxisLabel();
 }
 
 function init() {
-    xVariable = 'poverty'
-    yVariable = 'smokes'
+    xVariable = 'poverty';
+    yVariable = 'smokes';
 
-    drawGraph()
-    addYAxisLabel()
+    drawGraph();
+    addYAxisLabel();
+    addXAxisLabel();
 }
 
 init()
-
-
-// d3.csv('assets/data/data.csv').then(function (data) {
-//
-//     let circles = svg.selectAll("circles")
-//         .data(data)
-//         .enter()
-//         .append('circle')
-//         .attr('cy', function (d) {
-//             return y(d['smokes'])
-//         })
-//         .attr('cx', function (d) {
-//             return x(d['poverty'])
-//         })
-//         .attr('r', 5);
-
-    // // X axis
-    // svg.append('g')
-    //     .attr('class', 'x axis')
-    //     .attr('transform', 'translate(0,' + height + ')')
-    //     .call(xAxis)
-    //
-    // // Y axis
-    // svg.append('g')
-    //     .attr('class', 'y axis')
-    //     .call(yAxis)
-    //
-    // // Draw dots
-    // svg.selectAll('.dot')
-    //     .data(data)
-    //     .enter().append('circle')
-    //     .attr('class', 'dot')
-    //     .attr('r' , 3.5)
-    //     .attr('cx', xMap)
-    //     .attr('cy', yMap)
-
-    // var stateAbbr = data.map(obj => obj.abbr);
-    // var poverty = data.map(obj => obj.poverty);
-    // var smoke = data.map(obj => obj.smokes);
-
-    // // Add X axis
-    // var x = d3.scaleLinear()
-    //     .domain([0, 100])
-    //     .range([ 0, svgWidth]);
-    // svg.append("g")
-    //     .attr("transform", "translate(0," + svgHeight + ")")
-    //     .call(d3.axisBottom(x));
-    //
-    // // Add Y axis
-    // var y = d3.scaleLinear()
-    //     .domain([0, 100])
-    //     .range([ svgHeight, 0]);
-    // svg.append("g")
-    //     .call(d3.axisLeft(y));
-    //
-    // // Add dots
-    // svg.append('g')
-    //     .selectAll("dot")
-    //     .data(data)
-    //     .enter()
-    //     .append("circle")
-    //     .attr("cx", function (d) { return x(d.poverty); } )
-    //     .attr("cy", function (d) { return y(d.smokes); } )
-    //     .attr("r", 1.5)
-    //     .style("fill", "#69b3a2")
-
-
-// });
